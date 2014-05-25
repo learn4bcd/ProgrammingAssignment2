@@ -33,6 +33,8 @@
 ## setinverse: set the value of the inverse
 ## getinverse: get the value of the inverse
 makeCacheMatrix <- function(x = matrix()) {
+    
+    ## create methods
     i <- NULL
     setdata <- function(y) {
         x <<- y
@@ -41,6 +43,8 @@ makeCacheMatrix <- function(x = matrix()) {
     getdata <- function() x
     setinverse <- function(inverse) i <<- inverse
     getinverse <- function() i
+    
+    ## return the 'cachableMatrix' class including the 4 methods creadted above.
     z <- list(setdata = setdata,
               getdata = getdata,
               setinverse = setinverse,
@@ -56,11 +60,15 @@ makeCacheMatrix <- function(x = matrix()) {
 ## cache and skips the computation. Otherwise, it calculates the inverse of the
 ## matrix data and sets the inverse in the cache via the 'setinverse' method.
 cacheSolve <- function(x, ...) {
+    ## if the inverse has already been calculated?
     i <- x$getinverse()
     if(!is.null(i)) {
         message("Getting cached result :")
         return(i)
     }
+    
+    ## calculating the inverse of the matrix data and setting
+    ## the inverse in the cache via the 'setinverse' method.
     data <- x$getdata()
     i <- solve(data, ...)
     x$setinverse(i)
